@@ -22,6 +22,32 @@ class ContactsList extends Component {
         contacts: newStateContacts,
       });
     }
+
+    deleteContact(index){
+      const delContact = [...this.state.contacts];
+      delContact.splice(index, 1)
+      this.setState({
+        contacts: delContact
+      })
+    }
+
+    sortByName(){
+      let sortContacts = this.state.contacts.slice();
+      sortContacts.sort((a,b) => a.name.localeCompare(b.name));
+  
+      this.setState({
+          contacts: sortContacts
+      })
+    }
+
+    sortByPopularity(){
+      let sortContacts = this.state.contacts.slice();
+      sortContacts.sort((a, b) => a.popularity - b.popularity);
+  
+      this.setState({
+          contacts: sortContacts
+      })
+    }
   
   render() {
     
@@ -36,7 +62,6 @@ class ContactsList extends Component {
                 <td>
                   <h4>{contact.popularity}</h4>
                 </td>
-                <h1></h1>
               </tr>
               
     })
@@ -44,21 +69,25 @@ class ContactsList extends Component {
 
 
   return (
-    <div className="App">
+    <div>
           <h1>IronContacts</h1>
+
           <table>
+          
             <tr>
               <th>Picture</th>
-              <th>Name</th>
-              <th>Popularity</th>
+              <th>Name<button onClick={()=>this.sortByName()}>Sort by name</button></th>
+              
+              <th>Popularity<button onClick={()=>this.sortByPopularity()}>Sort by popularity</button></th>
             </tr>
 
               {result}
 
           </table>
-          <div className="App">
-            <button onClick = {()=> this.addRandom()} >Add Random</button>
+          <div>
           </div>
+            <button onClick = {()=> this.addRandom()} >Add one random</button>
+            <button onClick={()=>this.deleteContact()} >Delete one</button>
       </div>
     );
   }
